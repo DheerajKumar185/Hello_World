@@ -1,6 +1,8 @@
 package com.tech.doks.spring;
 
-public class HelloWorld {
+import org.springframework.beans.factory.BeanNameAware;
+
+public class HelloWorld implements BeanNameAware {
 	private String message;
 
 	public void setMessage(String message) {
@@ -9,5 +11,11 @@ public class HelloWorld {
 	
 	public void pringHello() {
 		System.out.println(message + " from Spring 4");
+	}
+
+	@Override
+	public void setBeanName(String beanName) {
+		System.out.println("Bean Name is : " + beanName);
+		
 	}
 }
