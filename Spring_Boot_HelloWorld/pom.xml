@@ -7,7 +7,6 @@
 	<artifactId>Spring_Boot</artifactId>
 	
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 
 	<name>Spring_Boot_HelloWorld</name>
 	<description>Demo project for Spring Boot</description>
