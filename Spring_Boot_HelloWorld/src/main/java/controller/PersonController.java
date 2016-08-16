@@ -19,6 +19,15 @@ public class PersonController {
 		return "personview";
 	}
 	
+	@RequestMapping("/getPerson")
+	public @ResponseBody Person getPerson() {
+		Person p = new Person();
+		p.setFirstName("Dheeraj");
+		p.setLastName("Kumar");
+		p.setAge(26);
+		return p;
+	}
+	
 	@ResponseBody
 	@RequestMapping
 	String Hello() {
