@@ -62,6 +62,7 @@ public class UserController {
 		User user = userRepository.findOne(userId);
 
 		if (user == null) {
+			logger.error("user not found with ID : {}", userId);
 			throw new UserNotFoundException(userId);
 		}
 
