@@ -2,8 +2,10 @@ package com.tech.lti.mongodb.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+/*import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;*/
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +23,8 @@ import com.tech.lti.mongodb.model.User;
 @RestController
 public class UserController {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	/*private final Logger logger = LoggerFactory.getLogger(getClass());*/
+	private static final Logger logger = LogManager.getLogger();
 
 	private final UserRepository userRepository;
 
