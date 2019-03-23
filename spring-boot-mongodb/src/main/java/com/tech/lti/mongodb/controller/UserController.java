@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tech.lti.mongodb.dao.UserDao;
 import com.tech.lti.mongodb.dao.UserRepository;
-import com.tech.lti.mongodb.exception.ErrorDetails;
+import com.tech.lti.mongodb.exception.CustomException;
+import com.tech.lti.mongodb.exception.ErrorResponse;
 import com.tech.lti.mongodb.exception.UserNotFoundException;
 import com.tech.lti.mongodb.model.User;
 
@@ -30,7 +31,7 @@ public class UserController {
 
 	private final UserDao userDao;
 
-	private ErrorDetails response = null;
+	private ErrorResponse response = null;
 
 	public UserController(UserRepository userRepository, UserDao userDao) {
 		this.userRepository = userRepository;
@@ -44,23 +45,33 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ResponseEntity<ErrorDetails> getAllUsers() throws Exception {
+	public ResponseEntity<ErrorResponse> getAllUsers() throws CustomException {
 		logger.info("Getting all users.");
 
-		List<User> users = userRepository.findAll();
+		List<User> users = null;
+		try {
+			users = userRepository.findAll();
+		} catch (Exception ex) {
+			if(ex.getMessage().contains("MongoTimeoutException")) {
+				throw new CustomException(HttpStatus.SERVICE_UNAVAILABLE.value(), "Currently mongodb down due to some maintenance activity. Please contact to DB administrative team.", ex.getMessage());
+			} else {
+				throw new CustomException(HttpStatus.SERVICE_UNAVAILABLE.value(), ex.getMessage());
+			}
+			
+		}
 
-		ErrorDetails errorDetails = new ErrorDetails();
-		errorDetails.setCode(200);
-		errorDetails.setMessage("success");
+		ErrorResponse errorDetails = new ErrorResponse();
+		errorDetails.setErrorCode(200);
+		errorDetails.setErrorMessage("success");
 		errorDetails.setData(users);
 
-		return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.OK);
+		return new ResponseEntity<ErrorResponse>(errorDetails, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-	public ResponseEntity<ErrorDetails> getUser(@PathVariable String userId) throws Exception {
+	public ResponseEntity<ErrorResponse> getUser(@PathVariable String userId) throws Exception {
 		logger.info("Getting user with ID: {}.", userId);
-		response = new ErrorDetails();
+		response = new ErrorResponse();
 
 		User user = userRepository.findOne(userId);
 
@@ -69,11 +80,11 @@ public class UserController {
 			throw new UserNotFoundException(userId);
 		}
 
-		response.setCode(200);
-		response.setMessage("success");
+		response.setErrorCode(200);
+		response.setErrorMessage("success");
 		response.setData(user);
 
-		return new ResponseEntity<ErrorDetails>(response, HttpStatus.OK);
+		return new ResponseEntity<ErrorResponse>(response, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/qualification/{userId}", method = RequestMethod.GET)

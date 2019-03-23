@@ -9,23 +9,34 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ErrorHandlingController {
 	
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<ErrorDetails> handleAllExceptions(Exception ex) throws Exception {
+	public ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex) {
 		
-		ErrorDetails errorDetails = new ErrorDetails();
-		errorDetails.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-		errorDetails.setMessage(ex.getMessage());
+		ErrorResponse errorDetails = new ErrorResponse();
+		errorDetails.setErrorCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		errorDetails.setErrorMessage(ex.getMessage());
 		
-		return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<ErrorResponse>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@ExceptionHandler(CustomException.class)
+	public ResponseEntity<ErrorResponse> handleCustomExceptions(CustomException ex) {
+		
+		ErrorResponse errorResponse = new ErrorResponse();
+		errorResponse.setErrorCode(ex.getErrorCode());
+		errorResponse.setErrorMessage(ex.getErrorMessage());
+		errorResponse.setErrorDetails(ex.getErrorDetails());
+		
+		return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.SERVICE_UNAVAILABLE);
 	}
 	
 	@ExceptionHandler(UserNotFoundException.class)
-	public ResponseEntity<ErrorDetails> dataNotFoundException(UserNotFoundException ex) throws Exception {
+	public ResponseEntity<ErrorResponse> dataNotFoundException(UserNotFoundException ex) {
 		
-		ErrorDetails errorDetails = new ErrorDetails();
-		errorDetails.setCode(HttpStatus.NOT_FOUND.value());
-		errorDetails.setMessage(ex.getMessage());
+		ErrorResponse errorDetails = new ErrorResponse();
+		errorDetails.setErrorCode(HttpStatus.NOT_FOUND.value());
+		errorDetails.setErrorMessage(ex.getMessage());
 		
-		return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<ErrorResponse>(errorDetails, HttpStatus.NOT_FOUND);
 	}
 
 }
