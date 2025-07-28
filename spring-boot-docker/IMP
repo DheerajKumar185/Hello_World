@@ -1,0 +1,23 @@
+docker build -t spring-boot-docker.jar .
+docker run -p 9090:8080 spring-boot-docker.jar
+docker start CONTAINER_ID
+docker stop CONTAINER_ID
+
+curl --location 'http://localhost:8080/employees' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Dheeraj Kumar",
+    "salary": 98000,
+    "department": "Senior Specilist - Software Engineed"
+}'
+curl --location 'http://localhost:8080/employees'
+curl --location --request PUT 'http://localhost:8080/employees/111' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Dheeraj Kumar",
+    "salary": 99000,
+    "department": "Senior Specilist - Software Engineed"
+}'
+curl --location --request DELETE 'http://localhost:8080/employees/111' \
+--data ''
+curl --location 'http://localhost:8080/employees/111'
