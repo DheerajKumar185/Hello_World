@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: spring-boot-chat-gpt
+  ai:
+    openai:
+      api-key: sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      chat:
+        options:
+          model: gpt-4o
+          temperature: 0.7
+logging:
+  level:
+    org.springframework.ai: DEBUG
+    org.springframework.web.client: DEBUG
