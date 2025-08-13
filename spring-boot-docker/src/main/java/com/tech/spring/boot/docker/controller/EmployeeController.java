@@ -28,19 +28,19 @@ public class EmployeeController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Employee> getById(@PathVariable("id") int id) {
         Employee employee = employeeService.findById(id);
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee, @PathVariable("id") int id) {
         Employee updatedRecord = employeeService.updateEmployee(employee, id);
         return new ResponseEntity<>(updatedRecord, HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> removeEmployee(@PathVariable("id") int id) {
         String status = employeeService.removeEmployee(id);
         return new ResponseEntity<>(status, HttpStatus.NO_CONTENT);
