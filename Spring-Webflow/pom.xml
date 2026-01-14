@@ -9,7 +9,7 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<spring.version>4.1.6.RELEASE</spring.version>
-		<springwebflow.version>2.4.2.RELEASE</springwebflow.version>
+		<springwebflow.version>2.4.6.RELEASE</springwebflow.version>
 		<jstl.version>1.2</jstl.version>
 	</properties>
 	<dependencies>
