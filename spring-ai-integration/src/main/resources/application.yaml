@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: spring-ai-integration
+
+#For Ollama. It's optional if ollama is running on localhost:11434
+#  ai:
+#    ollama:
+#      base-url: http://localhost:11434
+#      chat:
+#        options:
+#          model: mistral
+
+#API Key for OpenAI
+#  ai:
+#    openai:
+#      api-key: ${OPENAI_API_KEY}
+
+#API Key for Google Gemini
+#  ai:
+#    google:
+#      genai:
+#        api-key: ${GEMINI_API_KEY}
+#        chat:
+#          options:
+#            model: gemini-3.6-flash
+
+#API Key for GROQ
+  ai:
+    openai:
+      api-key: ${GROQ_API_KEY}
+      base-url: https://api.groq.com/openai/v1
+      chat:
+        options:
+          model: openai/gpt-oss-20b
